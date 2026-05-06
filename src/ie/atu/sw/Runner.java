@@ -14,7 +14,7 @@ public class Runner {
 		//You should put the following code into a menu or Menu class
 		System.out.println(ConsoleColour.WHITE);
 		System.out.println("************************************************************");
-		System.out.println("*     ATU - Dept. of Computer Science & Applied Physics    *");
+		System.out.println("*     ATU - Dept. of Computer Science    *");
 		System.out.println("*                                                          *");
 		System.out.println("*  Word Analogies with Vector Arithmetic & Virtual Threads *");
 		System.out.println("*                                                          *");
