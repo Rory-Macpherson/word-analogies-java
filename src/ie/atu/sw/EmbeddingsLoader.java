@@ -9,9 +9,10 @@ public class EmbeddingsLoader {
 	
 	/*this is the method that is first called in this class,
 	 * it is the only public method, so it in turn calls all the other methods*/
-	public void makeIndex(String book, String out) throws Exception{
+	// O(n) - calls parse which reads every line once, where n is the number of lines in the file
+	public Map<String, double[]> makeIndex(String book) throws Exception{
 		parse(book);
-		writeIndex(out);
+		return idx;
 	}
 	
 	/* this method takes in a string called book
@@ -24,6 +25,8 @@ public class EmbeddingsLoader {
 	 * then the while loop, this is saying string text = br.readline
 	 * and then saying, if that is not null, process it, and passes
 	 * it to the process method. */
+	
+	// O(n) - reads each line of the file exactly once, where n is the number of lines
 	private void parse(String book) throws Exception{
 		try(BufferedReader br  = new BufferedReader(new InputStreamReader(new FileInputStream(book)))){
 			String text;
@@ -52,6 +55,8 @@ public class EmbeddingsLoader {
 	 * also note the vector starts at i-1, that is to make sure that
 	 * the first double goes to position 0 as i starts at 1 in the for loop to
 	 * skip the word we have added to the string word  */
+	
+	// O(k) - loops over the tokens in one line, where k is fixed at 51 (1 word + 50 doubles), so effectively O(1)
 	private void process(String line) throws Exception{
 		double[] vector = new double[50];
 		String [] parts = line.split(",");
@@ -63,14 +68,14 @@ public class EmbeddingsLoader {
 		}		
 		
 
+	// O(1) - single put into a ConcurrentHashMap, average constant time
 	private void addWord(String word, double[] vectors){
 		idx.put(word, vectors);
 		
-	}
-	
-	private void writeIndex(String out) throws Exception{
 		
 	}
+	
+	
 	
 	
 	
