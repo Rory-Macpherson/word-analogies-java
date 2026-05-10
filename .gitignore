@@ -20,3 +20,7 @@ Thumbs.db
 
 # Project brief
 brief/
+
+# Generated JavaDocs
+docs/
+doc/
