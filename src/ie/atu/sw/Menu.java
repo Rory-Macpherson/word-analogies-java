@@ -12,7 +12,8 @@ import java.util.Scanner;
  * Handles all user input and output, loads embedding, collects words,
  * chooses similarity method, runs the engine and writes results to file.
  * lots of class level fields i use throughout the class, private so they can't be changed or seen by others.
- * result is the best. it does it loads.
+ * result is the best. it does loads.
+ * Added menu features that now update depending on data user has entered.
  * @author Rory
  */
 public class Menu {
@@ -71,13 +72,46 @@ public class Menu {
             System.out.println("************************************************************");
             System.out.println("(1) Enter Path to Embeddings File");
             System.out.println("(2) Enter words and required Vector Operation (default will be set to: king - man + woman)");
+            if(arithmeticType == 0) {
             System.out.println("(3) Choose Similarity Method (default will be set to: cosignDistance)");
+            }else {
+            	 String current = switch(arithmeticType) {
+                 case 1 -> "Cosine Distance";
+                 case 2 -> "Dot Product";
+                 case 3 -> "Euclidean Distance";
+                 default -> "Cosine Distance";
+             };
+             System.out.println("(3) Choose Similarity Method (currently set to: " + current + ")");
+            }
             System.out.println("(4) Specify Output File (default will be set to: ./out.txt)");
             System.out.println("(5) Run");
+            if(!inputWords.isEmpty()) {
+            	System.out.println("(6) Clear Current words? Current words:" + inputWords);
+            	System.out.println("(7) Quit");
+            }else {
             System.out.println("(6) Quit");
-
+            }
             System.out.print("-> ");
             int op = readInt();
+            if(!inputWords.isEmpty()) {
+            	   switch (op) {
+                   case 1 -> loadFile();
+                   case 2 -> enterWords();
+                   case 3 -> similarityMethod();
+                   case 4 -> setOutputFile();
+                   case 5 -> run();
+                   case 6 -> {
+                	      inputWords = new ArrayList<>();
+                	      wordsEntered = false;
+                	  }
+                   case 7 -> quit();
+                   default -> {
+                       System.out.print(ConsoleColour.RED);
+                       System.out.println("You made an incorrect selection, please try again.");
+                       System.out.print(ConsoleColour.YELLOW);
+                   }
+               }
+            }else {
             switch (op) {
                 case 1 -> loadFile();
                 case 2 -> enterWords();
@@ -90,6 +124,7 @@ public class Menu {
                     System.out.println("You made an incorrect selection, please try again.");
                     System.out.print(ConsoleColour.YELLOW);
                 }
+            }
             }
         }
     }
